@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  vision_app:
+    build: .
+    volumes:
+      - .:/app  # Mount the current directory to /app inside the container
+    ports:
+      - "8501:8501"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+    restart: always
