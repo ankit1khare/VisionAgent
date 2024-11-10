@@ -2,6 +2,7 @@
 
 This application leverages **VisionAgent** for AI-powered image and video analysis, aimed at ensuring safety during paragliding activities. The app detects safety gear, identifies acrobatic maneuvers, and generates descriptive analyses of videos.
 
+Vision Agent from Landing AI repo: https://github.com/landing-ai/vision-agent/tree/main?tab=readme-ov-file#visionagent-basic-usage
 ---
 
 ## Features
