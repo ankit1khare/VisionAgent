@@ -7,12 +7,13 @@ from vision_agent.agent import VisionAgent
 from vision_agent.tools import extract_frames_and_timestamps, owl_v2_image, overlay_bounding_boxes, save_video
 from vision_agent.lmm import AnthropicLMM
 from dotenv import load_dotenv
+import vision_agent as va
 
 # Load environment variables from .env file
 load_dotenv()
 
 # Initialize VisionAgent and LMM
-agent = VisionAgent()
+agent = va.agent.OpenAIVisionAgentCoder()
 lmm = AnthropicLMM()
 
 # Safety items to detect
@@ -89,6 +90,29 @@ def analyze_video_with_lmm(video_path):
         st.error(f"Error during analysis: {e}")
         return None
 
+
+# def analyze_video_with_openai_coder(video_path):
+#     """Use OpenAIVisionAgentCoder to analyze the video and generate a story narration."""
+#     try:
+#         # Call the agent with the video file and query directly
+#         response = agent(
+#             "Analyze this video and narrate a detailed story like Sherlock Holmes.",
+#             media=video_path
+#         )
+
+#         # Check if the response is structured correctly
+#         if isinstance(response, dict) and 'response' in response:
+#             return response['response']
+#         elif isinstance(response, str):
+#             return response
+#         else:
+#             return "No narration available."
+
+#     except Exception as e:
+#         st.error(f"Error during video analysis: {e}")
+#         return None
+
+
 def main():
     st.title("Welcome to Happy Landing Paragliding Service")
 
@@ -129,11 +153,18 @@ def main():
             st.video(output_video)
 
         # LMM Analysis for the video
-        st.write("Analyzing video using LMM for telling your story...")
+        st.write("Analyzing video using Anthropic's LMM for telling your story...")
         lmm_response = analyze_video_with_lmm(video_input_path)
         if lmm_response:
             st.subheader("Your Paragliding Story:")
             st.write(lmm_response)
+
+        # Vision Agent for video captioning
+        # st.write("Analyzing video for Sherlock Home style narration...")
+        # lmm_response = analyze_video_with_openai_coder(video_input_path)
+        # if lmm_response:
+        #     st.subheader("Sherlock's analysis:")
+        #     st.write(lmm_response)
 
         # Clean up uploaded video
         os.remove(video_input_path)
